@@ -1,3 +1,4 @@
+# 该文件用于存储读取文件夹，初始化数据函数
 # %%
 import re
 channels = 6
@@ -23,7 +24,21 @@ def ReadTxt(FileName):
             [name, data] = line.split("\t", 1)
             if name == "RawEMG:":
                 EMG = [int(s)-127.5 for s in re.findall(r'\d+', data)]
-                EMGList.append(EMG[0:channels])
+                # EMGList.append(EMG[0:channels])
+                EMGList.append([EMG[5], 0])
+    return EMGList
+
+
+def ReadTxt0(FileName):
+    EMGList = []
+    with open(FileName, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            EMG = line.split(',')
+            x = range(0, len(EMG))
+            for i in x:
+                EMG[i] = float(EMG[i])
+            EMGList.append(EMG[0:10])
     return EMGList
 
 

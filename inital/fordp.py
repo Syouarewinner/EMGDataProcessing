@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import svm as sk_svm
 from sklearn.metrics import accuracy_score
 # import pandas as pd
-import feature
+# import feature
 import readtxt
 
 
@@ -43,56 +43,22 @@ def labelsort(inNdarry, label):
 
 
 # %%
-# 读取数据
-EMGList = readtxt.ReadTxt("../data/静息.txt")
-ndarry = feature.feature(EMGList)
-label = np.ones(1000)
-dataset = [ndarry[0:1000, ...], label]
+
+EMGList = np.array(readtxt.ReadTxt0("../data/6-21.txt"))
+
+dataset = [EMGList[0:10000, 0:8], EMGList[0:10000, 9]]
+print(len(dataset[0]), len(dataset[1]))
+plot(dataset[0])
+plt.plot(dataset[1])
 # EMGMAV = MAV(EMGList)
 
 # %%
-EMGList = readtxt.ReadTxt("../data/内收.txt")
-MavList = feature.feature(EMGList)
-label = np.ones(1000)*2
-dataset[0] = np.row_stack([dataset[0], MavList[0:1000, ...]])
-dataset[1] = np.append(dataset[1], label)
-print(1)
 
-EMGList = readtxt.ReadTxt("../data/屈腕.txt")
-MavList = feature.feature(EMGList)
-label = np.ones(1000)*3
-dataset[0] = np.row_stack([dataset[0], MavList[0:1000, ...]])
-dataset[1] = np.append(dataset[1], label)
-print(2)
-
-EMGList = readtxt.ReadTxt("../data/伸腕.txt")
-MavList = feature.feature(EMGList)
-label = np.ones(1000)*4
-dataset[0] = np.row_stack([dataset[0], MavList[0:1000, ...]])
-dataset[1] = np.append(dataset[1], label)
-print(3)
-
-EMGList = readtxt.ReadTxt("../data/伸掌.txt")
-MavList = feature.feature(EMGList)
-label = np.ones(1000)*5
-dataset[0] = np.row_stack([dataset[0], MavList[0:1000, ...]])
-dataset[1] = np.append(dataset[1], label)
-print(4)
-
-EMGList = readtxt.ReadTxt("../data/握拳.txt")
-MavList = feature.feature(EMGList)
-label = np.ones(1000)*6
-dataset[0] = np.row_stack([dataset[0], MavList[0:1000, ...]])
-dataset[1] = np.append(dataset[1], label)
-print(5)
-
-# %%
-# 分割训练集与测试集
 X_train, X_test, y_train, y_test = train_test_split(dataset[0], dataset[1], test_size=0.1)
 
 # %%
 # 将EMGMAV用于训练SVM
-model = sk_svm.SVC(C=0.21, kernel='rbf', gamma='auto')
+model = sk_svm.SVC(C=0.5, kernel='rbf', gamma='auto')
 model.fit(X_train, y_train)
 
 # %%
@@ -102,7 +68,6 @@ print('R^2: ', model.score(X_test, y_test))
 print('准确率: ', accuracy_score(y_test, y_return))
 
 # %%
-# 画出识别曲线
 x = range(0, len(y_test))
 y_return = labelsort(y_return, y_test)
 y_test = np.sort(y_test)
