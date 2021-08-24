@@ -1,7 +1,7 @@
 # %%
 import numpy as np
 from matplotlib import pyplot as plt
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn import svm as sk_svm
 from sklearn.metrics import accuracy_score
 # import pandas as pd
@@ -88,7 +88,7 @@ print(5)
 
 # %%
 # 分割训练集与测试集
-X_train, X_test, y_train, y_test = train_test_split(dataset[0], dataset[1], test_size=0.1)
+X_train, X_test, y_train, y_test = train_test_split(dataset[0], dataset[1], test_size=0.3)
 
 # %%
 # 将EMGMAV用于训练SVM

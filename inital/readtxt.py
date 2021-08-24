@@ -1,7 +1,7 @@
 # 该文件用于存储读取文件夹，初始化数据函数
 # %%
 import re
-channels = 6
+channels = 5
 
 
 def ReadTxt(FileName):
@@ -25,7 +25,7 @@ def ReadTxt(FileName):
             if name == "RawEMG:":
                 EMG = [int(s)-127.5 for s in re.findall(r'\d+', data)]
                 # EMGList.append(EMG[0:channels])
-                EMGList.append([EMG[5], 0])
+                EMGList.append(EMG[0:5])
     return EMGList
 
 
@@ -46,12 +46,13 @@ def ReadTxt0(FileName):
 if __name__ == '__main__':
     from matplotlib import pyplot as plt
     import numpy as np
-    filename = "../data/静息.txt"
+    filename = "../data/1.txt"
     a = np.array(ReadTxt(filename))
     length = len(a)
-    x = range(0, length)
+    x = range(16250, 16750)
     for i in range(0, channels):
         plt.subplot(channels, 1, i+1)
-        plt.plot(x, a[..., i])
+        plt.plot(x, a[16250:16750, i])
         plt.yticks([-127.5, 127.5])
+    plt.show()
 # %%

@@ -33,9 +33,9 @@ def feature(EMGList):
     df_var = r.var()[0:-1:step].dropna()
 
     Feature = pd.concat([df_mav
-    # , df_rms
-    , df_var
-    ], axis=1)
+                        # , df_rms
+                         , df_var
+                         ], axis=1)
     # print(np.array(Feature))
     return np.array(Feature)
 

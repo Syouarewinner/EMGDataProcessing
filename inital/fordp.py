@@ -54,11 +54,12 @@ plt.plot(dataset[1])
 
 # %%
 
-X_train, X_test, y_train, y_test = train_test_split(dataset[0], dataset[1], test_size=0.1)
+X_train, X_test, y_train, y_test = train_test_split(dataset[0], dataset[1], test_size=0.5)
 
 # %%
 # 将EMGMAV用于训练SVM
-model = sk_svm.SVC(C=0.5, kernel='rbf', gamma='auto')
+model = sk_svm.SVC(C=0.5, kernel='rbf', gamma=0.125,
+                   decision_function_shape='ovo')
 model.fit(X_train, y_train)
 
 # %%
